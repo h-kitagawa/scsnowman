@@ -10,6 +10,9 @@
 	\expandafter\scmp@env@begin\scmp@env@body
 	\end{mplibcode}\egroup
   }
+  \def\scmpifyoko#1{%
+	\unless\ifnum\ltjgetparameter{direction}=3\relax#1\fi
+  }
 \else
   \RequirePackage{gmp,xcolor}
 \fi

@@ -4,20 +4,11 @@
 \def\sctkzsym@snowman@shape@normal{%
   \setlength{\scmp@unit}{1.8ex}%
   \setlength{\scmp@unit}{\sctkzsym@snowman@scale\scmp@unit}%
-  \setlength{\sctkzsym@coord@baseline}{%
-    \ifsctkzsym@snowman@adjustbaseline
-      0.144ex\relax
-    \else
-      \z@
-    \fi}%
-  \setlength{\sctkzsym@coord@baseline}{\sctkzsym@snowman@scale\sctkzsym@coord@baseline}%
   {\setbox\z@=\sctkzsym@beginyokobox
   \scmp@env
     numeric u; u:=\mpdim{\scmp@unit}; path p;
 	pickup pencircle scaled (\sctkzsym@snowman@scale*\mpdim{0.025ex});
 	linecap:=rounded; linejoin:=rounded;
-	%% scale=\sctkzsym@snowman@scale,baseline=\sctkzsym@coord@baseline*\sctkzsym@coord@scl]
-    %%\useasboundingbox(0,0) rectangle (1,1);
     \scmp@path{body}*{% body (IPA-like)
         (0.5u, 0.72u) .. controls (0.64u,0.72u) and (0.76u,0.65u) ..
         (0.76u,0.55u) .. controls (0.76u,0.51u) and (0.72u,0.47u) ..
@@ -146,43 +137,49 @@
     \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.88u,0.73u) }
     \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.92u,0.53u) }
     \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.94u,0.23u) }
-%    \ifsctkzsym@snowman@note
-%      \sctkzsym@snowman@notepath % musical note (eighth note, quaver)
-%        (0.119,0.789) .. controls (0.114,0.788) and (0.114,0.788) ..
-%        (0.115,0.781) .. controls (0.122,0.740) and (0.124,0.732) ..
-%        (0.125,0.728) .. controls (0.127,0.717) and (0.127,0.717) ..
-%        (0.118,0.717) .. controls (0.105,0.717) and (0.096,0.709) ..
-%        (0.096,0.698) .. controls (0.096,0.691) and (0.100,0.686) ..
-%        (0.106,0.683) .. controls (0.116,0.679) and (0.131,0.687) ..
-%        (0.134,0.698) .. controls (0.135,0.700) and (0.134,0.710) ..
-%        (0.132,0.720) .. controls (0.126,0.752) and (0.125,0.764) ..
-%        (0.124,0.768) .. controls (0.124,0.773) and (0.124,0.773) ..
-%        (0.132,0.773) .. controls (0.141,0.774) and (0.145,0.771) ..
-%        (0.148,0.764) .. controls (0.150,0.760) and (0.154,0.758) ..
-%        (0.155,0.761) .. controls (0.156,0.761) and (0.155,0.766) ..
-%        (0.153,0.771) .. controls (0.151,0.780) and (0.146,0.785) ..
-%        (0.139,0.789) .. controls (0.136,0.791) and (0.126,0.791) ..
-%        (0.119,0.789) --
-%        cycle;
-%      \sctkzsym@snowman@notepath % wavy line
-%        (0.235,0.770) .. controls (0.234,0.769) and (0.232,0.765) ..
-%        (0.231,0.761) .. controls (0.228,0.750) and (0.223,0.749) ..
-%        (0.210,0.760) .. controls (0.203,0.766) and (0.201,0.766) ..
-%        (0.195,0.766) .. controls (0.186,0.766) and (0.179,0.761) ..
-%        (0.174,0.750) .. controls (0.170,0.742) and (0.169,0.738) ..
-%        (0.172,0.735) .. controls (0.176,0.732) and (0.179,0.734) ..
-%        (0.183,0.741) .. controls (0.187,0.750) and (0.191,0.755) ..
-%        (0.194,0.755) .. controls (0.196,0.755) and (0.200,0.752) ..
-%        (0.203,0.749) .. controls (0.210,0.743) and (0.220,0.738) ..
-%        (0.225,0.738) .. controls (0.231,0.738) and (0.237,0.742) ..
-%        (0.241,0.749) .. controls (0.245,0.757) and (0.246,0.766) ..
-%        (0.242,0.770) .. controls (0.239,0.772) and (0.238,0.772) ..
-%        (0.235,0.770) --
-%        cycle;
-%    \fi
+    \scmp@path{note}{}{% musical note (eighth note, quaver)
+        (0.119u,0.789u) .. controls (0.114u,0.788u) and (0.114u,0.788u) ..
+        (0.115u,0.781u) .. controls (0.122u,0.740u) and (0.124u,0.732u) ..
+        (0.125u,0.728u) .. controls (0.127u,0.717u) and (0.127u,0.717u) ..
+        (0.118u,0.717u) .. controls (0.105u,0.717u) and (0.096u,0.709u) ..
+        (0.096u,0.698u) .. controls (0.096u,0.691u) and (0.100u,0.686u) ..
+        (0.106u,0.683u) .. controls (0.116u,0.679u) and (0.131u,0.687u) ..
+        (0.134u,0.698u) .. controls (0.135u,0.700u) and (0.134u,0.710u) ..
+        (0.132u,0.720u) .. controls (0.126u,0.752u) and (0.125u,0.764u) ..
+        (0.124u,0.768u) .. controls (0.124u,0.773u) and (0.124u,0.773u) ..
+        (0.132u,0.773u) .. controls (0.141u,0.774u) and (0.145u,0.771u) ..
+        (0.148u,0.764u) .. controls (0.150u,0.760u) and (0.154u,0.758u) ..
+        (0.155u,0.761u) .. controls (0.156u,0.761u) and (0.155u,0.766u) ..
+        (0.153u,0.771u) .. controls (0.151u,0.780u) and (0.146u,0.785u) ..
+        (0.139u,0.789u) .. controls (0.136u,0.791u) and (0.126u,0.791u) ..
+        (0.119u,0.789u) --
+        cycle
+	}
+    \scmp@path{note}{}{% wavy line
+        (0.235u,0.770u) .. controls (0.234u,0.769u) and (0.232u,0.765u) ..
+        (0.231u,0.761u) .. controls (0.228u,0.750u) and (0.223u,0.749u) ..
+        (0.210u,0.760u) .. controls (0.203u,0.766u) and (0.201u,0.766u) ..
+        (0.195u,0.766u) .. controls (0.186u,0.766u) and (0.179u,0.761u) ..
+        (0.174u,0.750u) .. controls (0.170u,0.742u) and (0.169u,0.738u) ..
+        (0.172u,0.735u) .. controls (0.176u,0.732u) and (0.179u,0.734u) ..
+        (0.183u,0.741u) .. controls (0.187u,0.750u) and (0.191u,0.755u) ..
+        (0.194u,0.755u) .. controls (0.196u,0.755u) and (0.200u,0.752u) ..
+        (0.203u,0.749u) .. controls (0.210u,0.743u) and (0.220u,0.738u) ..
+        (0.225u,0.738u) .. controls (0.231u,0.738u) and (0.237u,0.742u) ..
+        (0.241u,0.749u) .. controls (0.245u,0.757u) and (0.246u,0.766u) ..
+        (0.242u,0.770u) .. controls (0.239u,0.772u) and (0.238u,0.772u) ..
+        (0.235u,0.770u) --
+        cycle
+    }
   \scmp@env@end
-  \sctkzsym@endyokobox%
-  \ht\z@=\scmp@unit\dp\z@=\z@\leavevmode\box\z@}%
+  \sctkzsym@endyokobox\leavevmode%
+  \setlength{\sctkzsym@coord@baseline}{0.144ex}%
+  \setlength{\sctkzsym@coord@baseline}{\sctkzsym@snowman@scale\sctkzsym@coord@baseline}%
+  \ht\z@=\dimexpr\scmp@unit-\sctkzsym@coord@baseline\relax
+  \dp\z@=\sctkzsym@coord@baseline
+  \scmpifyoko{%
+    \ifsctkzsym@snowman@adjustbaseline\else\raise\sctkzsym@coord@baseline\fi
+  }\box\z@}%
 }
 \endinput
 %%
