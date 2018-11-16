@@ -1,0 +1,180 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{scsnowman-mp-normal.def}[2018-00-00 scsnowman definition (normal, MetaPost)]
+\ifdefined\scmp@unit\else\newdimen\scmp@unit\fi
+\def\sctkzsym@snowman@shape@normal{%
+  \scmp@unit=1.8ex\scmp@unit=\strip@pt\sctkzsym@coord@scl\scmp@unit
+  {\setbox\z@=\hbox to\scmp@unit{\yoko\hss\sctkzsym@beginyokobox
+  \scmp@env
+    numeric u; u:=\mpdim{\scmp@unit}; path p;
+	pickup pencircle scaled (\strip@pt\sctkzsym@coord@scl*\mpdim{0.025ex});
+	linecap:=rounded; linejoin:=rounded; 
+	%% scale=\sctkzsym@snowman@scale,baseline=\sctkzsym@coord@baseline*\sctkzsym@coord@scl]
+    %%\useasboundingbox(0,0) rectangle (1,1);
+    \scmp@path{body}*{% body (IPA-like)
+        (0.5u, 0.72u) .. controls (0.64u,0.72u) and (0.76u,0.65u) ..
+        (0.76u,0.55u) .. controls (0.76u,0.51u) and (0.72u,0.47u) ..
+        (0.67u,0.44u) .. controls (0.79u,0.41u) and (0.84u,0.32u) ..
+        (0.84u,0.25u) .. controls (0.84u,0.13u) and (0.75u,0.08u) ..
+        (0.68u,0.08u) --
+        (0.32u,0.08u) .. controls (0.25u,0.08u) and (0.16u,0.13u) ..
+        (0.16u,0.25u) .. controls (0.16u,0.32u) and (0.21u,0.41u) ..
+        (0.33u,0.44u) .. controls (0.28u,0.47u) and (0.24u,0.51u) ..
+        (0.24u,0.55u) .. controls (0.24u,0.65u) and (0.36u,0.72u) ..
+        (0.5u, 0.72u) --
+        cycle
+	}
+	\scmp@path{eyes}{}{
+	  (fullcircle xscaled 0.04u yscaled 0.06u) shifted (0.40u,0.56u)
+    }
+	\scmp@path{eyes}{}{
+	  (fullcircle xscaled 0.04u yscaled 0.06u) shifted (0.60u,0.56u)
+    }
+	\scmp@path{nose}{}{
+	    (0.49u,0.50u) .. controls (0.52u,0.51u) and (0.51u,0.54u) ..
+        (0.48u,0.54u) .. controls (0.46u,0.54u) and (0.40u,0.52u) ..
+        (0.40u,0.52u) .. controls (0.39u,0.51u) and (0.46u,0.50u) ..
+        (0.49u,0.50u) --
+        cycle
+	}
+    \ifx\sctkzsym@snowman@mouthshape\sctkzsym@snowman@mouthshape@iii
+      \scmp@path{mouth}{}{ (0.40u,0.47u) -- (0.60u,0.47u) }
+    \else\ifx\sctkzsym@snowman@mouthshape\sctkzsym@snowman@mouthshape@ii
+      \scmp@path{mouth}{}{ (0.40u,0.46u) .. controls (0.45u,0.49u) and (0.55u,0.49u) .. (0.60u,0.47u) }
+    \else
+      \scmp@path{mouth}{}{ (0.40u,0.46u) .. controls (0.45u,0.45u) and (0.55u,0.45u) .. (0.60u,0.47u) }
+    \fi\fi
+	\scmp@path{sweat}{}{
+      (0.70u,0.56u) .. controls (0.64u,0.46u) and (0.75u,0.46u) .. (0.70u,0.56u) -- cycle
+	}
+    \scmp@path{hat}{}{ % hat
+        (0.58u,0.90u) --
+        (0.77u,0.81u) --
+        (0.74u,0.61u) .. controls (0.66u,0.60u) and (0.50u,0.66u) ..
+        (0.46u,0.72u) --
+        (0.58u,0.90u) --
+        cycle
+	}
+    \scmp@path{mikan}{}{
+	  (fullcircle xscaled 0.30u yscaled 0.24u) shifted (0.50u,0.80u)
+	}
+	\ifsctkzsym@snowman@mikan
+      \scmp@path{leaf}{}{
+          (0.50u,0.93u) .. controls (0.58u,0.95u) ..
+          (0.65u,0.88u) .. controls (0.50u,0.87u) ..
+          (0.50u,0.93u) --
+          cycle
+	  }
+    \fi
+	begingroup linecap:=butt;
+	  pickup pencircle scaled (\strip@pt\sctkzsym@coord@scl*\mpdim{0.08ex});
+      \scmp@path{broom}{}{ (0.03u,0.06u) -- (0.12u,0.50u) }
+	  pickup pencircle scaled (\strip@pt\sctkzsym@coord@scl*\mpdim{0.03ex});
+      \scmp@path{broom}{}{ (0.11u,0.50u) -- (0.06u,0.75u) }
+      \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.12u,0.72u) }
+      \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.18u,0.76u) }
+      \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.21u,0.70u) }
+      \scmp@path{broom}{}{ (0.13u,0.50u) -- (0.27u,0.74u) }
+    endgroup;
+	\scmp@path{arms}{}{% right arm (SourceHanSans-like)
+        (0.20u,0.31u) .. controls (0.19u,0.33u) and (0.14u,0.41u) ..
+        (0.13u,0.42u) .. controls (0.12u,0.43u) and (0.10u,0.43u) ..
+        (0.07u,0.44u) .. controls (0.04u,0.46u) and (0.06u,0.46u) ..
+        (0.08u,0.46u) .. controls (0.09u,0.46u) and (0.11u,0.44u) ..
+        (0.12u,0.44u) .. controls (0.14u,0.46u) and (0.14u,0.47u) ..
+        (0.15u,0.49u) .. controls (0.16u,0.51u) and (0.16u,0.49u) ..
+        (0.16u,0.48u) .. controls (0.16u,0.46u) and (0.14u,0.44u) ..
+        (0.15u,0.43u) .. controls (0.16u,0.42u) and (0.21u,0.35u) ..
+        (0.22u,0.33u) .. controls (0.23u,0.31u) and (0.21u,0.30u) ..
+        (0.20u,0.31u) --
+        cycle
+	}
+    \scmp@path{arms}{}{% left arm (SourceHanSans-like)
+        (0.80u,0.31u) .. controls (0.81u,0.33u) and (0.86u,0.41u) ..
+        (0.87u,0.42u) .. controls (0.88u,0.43u) and (0.90u,0.43u) ..
+        (0.93u,0.44u) .. controls (0.96u,0.46u) and (0.94u,0.46u) ..
+        (0.92u,0.46u) .. controls (0.91u,0.46u) and (0.89u,0.44u) ..
+        (0.88u,0.44u) .. controls (0.86u,0.46u) and (0.86u,0.47u) ..
+        (0.85u,0.49u) .. controls (0.84u,0.51u) and (0.84u,0.49u) ..
+        (0.84u,0.48u) .. controls (0.84u,0.46u) and (0.86u,0.44u) ..
+        (0.85u,0.43u) .. controls (0.84u,0.42u) and (0.79u,0.35u) ..
+        (0.78u,0.33u) .. controls (0.77u,0.31u) and (0.79u,0.30u) ..
+        (0.80u,0.31u) --
+        cycle
+    }
+    \scmp@path{muffler}{}{% muffler (SourceHanSans-like)
+        (0.27u,0.48u) .. controls (0.42u,0.38u) and (0.58u,0.38u) ..
+        (0.73u,0.48u) .. controls (0.75u,0.46u) and (0.76u,0.44u) ..
+        (0.77u,0.41u) .. controls (0.77u,0.39u) and (0.75u,0.37u) ..
+        (0.73u,0.36u) .. controls (0.74u,0.33u) and (0.74u,0.31u) ..
+        (0.76u,0.26u) .. controls (0.75u,0.25u) and (0.72u,0.24u) ..
+        (0.66u,0.23u) .. controls (0.66u,0.27u) and (0.65u,0.30u) ..
+        (0.63u,0.34u) .. controls (0.42u,0.30u) and (0.32u,0.35u) ..
+        (0.24u,0.41u) .. controls (0.25u,0.45u) and (0.26u,0.47u) ..
+        (0.27u,0.48u) --
+        cycle
+    }
+    \ifsctkzsym@snowman@muffler
+      \scmp@path{buttons}{}{ (fullcircle scaled 0.06u) shifted (0.50u,0.16u) }
+      \scmp@path{buttons}{}{ (fullcircle scaled 0.06u) shifted (0.50u,0.26u) }
+    \else
+      \scmp@path{buttons}{}{ (fullcircle scaled 0.06u) shifted (0.50u,0.17u) }
+      \scmp@path{buttons}{}{ (fullcircle scaled 0.06u) shifted (0.50u,0.29u) }
+    \fi
+    \ifsctkzsym@snowman@snow
+      \ifsctkzsym@snowman@broom
+        \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.13u,0.81u) }
+      \else
+        \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.07u,0.28u) }
+        \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.13u,0.55u) }
+        \ifsctkzsym@snowman@note\else
+          \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.08u,0.68u) }
+          \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.23u,0.76u) }
+        \fi
+      \fi
+    \fi
+    \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.42u,0.89u) }
+    \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.74u,0.89u) }
+    \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.88u,0.73u) }
+    \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.92u,0.53u) }
+    \scmp@path{snow}{}{ fullcircle scaled 0.08u shifted (0.94u,0.23u) }
+%    \ifsctkzsym@snowman@note
+%      \sctkzsym@snowman@notepath % musical note (eighth note, quaver)
+%        (0.119,0.789) .. controls (0.114,0.788) and (0.114,0.788) ..
+%        (0.115,0.781) .. controls (0.122,0.740) and (0.124,0.732) ..
+%        (0.125,0.728) .. controls (0.127,0.717) and (0.127,0.717) ..
+%        (0.118,0.717) .. controls (0.105,0.717) and (0.096,0.709) ..
+%        (0.096,0.698) .. controls (0.096,0.691) and (0.100,0.686) ..
+%        (0.106,0.683) .. controls (0.116,0.679) and (0.131,0.687) ..
+%        (0.134,0.698) .. controls (0.135,0.700) and (0.134,0.710) ..
+%        (0.132,0.720) .. controls (0.126,0.752) and (0.125,0.764) ..
+%        (0.124,0.768) .. controls (0.124,0.773) and (0.124,0.773) ..
+%        (0.132,0.773) .. controls (0.141,0.774) and (0.145,0.771) ..
+%        (0.148,0.764) .. controls (0.150,0.760) and (0.154,0.758) ..
+%        (0.155,0.761) .. controls (0.156,0.761) and (0.155,0.766) ..
+%        (0.153,0.771) .. controls (0.151,0.780) and (0.146,0.785) ..
+%        (0.139,0.789) .. controls (0.136,0.791) and (0.126,0.791) ..
+%        (0.119,0.789) --
+%        cycle;
+%      \sctkzsym@snowman@notepath % wavy line
+%        (0.235,0.770) .. controls (0.234,0.769) and (0.232,0.765) ..
+%        (0.231,0.761) .. controls (0.228,0.750) and (0.223,0.749) ..
+%        (0.210,0.760) .. controls (0.203,0.766) and (0.201,0.766) ..
+%        (0.195,0.766) .. controls (0.186,0.766) and (0.179,0.761) ..
+%        (0.174,0.750) .. controls (0.170,0.742) and (0.169,0.738) ..
+%        (0.172,0.735) .. controls (0.176,0.732) and (0.179,0.734) ..
+%        (0.183,0.741) .. controls (0.187,0.750) and (0.191,0.755) ..
+%        (0.194,0.755) .. controls (0.196,0.755) and (0.200,0.752) ..
+%        (0.203,0.749) .. controls (0.210,0.743) and (0.220,0.738) ..
+%        (0.225,0.738) .. controls (0.231,0.738) and (0.237,0.742) ..
+%        (0.241,0.749) .. controls (0.245,0.757) and (0.246,0.766) ..
+%        (0.242,0.770) .. controls (0.239,0.772) and (0.238,0.772) ..
+%        (0.235,0.770) --
+%        cycle;
+%    \fi
+  \scmp@env@end
+  \sctkzsym@endyokobox\hss}%
+  \ht\z@=\scmp@unit\dp\z@=\z@\leavevmode\box\z@}%
+}
+\endinput
+%%
+%% End of file `scsnowman-normal.def'.

@@ -1,0 +1,395 @@
+%%
+%% This is file `scsnowman-mp.sty',
+%% based on scsnowman.sty (a part of scsnowman package).
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{scsnowman-mp}[2018-00-00]
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{scmpsym-base}}
+\ProcessOptions\relax
+\RequirePackage{scmpsym-base}
+%
+% make document snowman (joke)
+\ifsctkzsym@document
+\def\makedocumentsnowman{%
+  \ifx\documentclass\@notprerr
+    % Already after \begin{document}, throw an error
+    \def\sctkzsym@documentsnowman{%
+      \PackageError{scsnowman-mp}{%
+        Use of \noexpand\makedocumentsnowman too late!\MessageBreak
+        Try using before \string\begin{document}}{%
+        I'll try to stop processing, but
+        this attempt can fail.\MessageBreak\@ehc}%
+      % If the above error is ignored, there's no way to
+      % exit successfully in all cases. So, try to continue
+      % processing by ignoring all LaTeX errors.
+      % TeX errors still remain; therefore, \makedocumentsnowman
+      % in internal vertical mode or math mode will fail.
+      \let\@latex@error\@gobbletwo\par
+      \scsnowman[init,scale=14,hat,muffler,buttons,snow]%
+      \scsnowman[init,scale=14,hat,muffler,buttons,arms]%
+      \scsnowman[init,scale=14,body,hat,muffler,buttons,snow]%
+      \end{document}}%
+  \else\ifx\documentclass\@twoclasseserror
+    \ifx\AtBeginDocument\@firstofone
+      % In preamble, inside \AtBeginDocument; avoid infinite loop
+      \def\sctkzsym@documentsnowman{%
+        \centering
+        \scsnowman[init,scale=14,hat,muffler,buttons,snow]%
+        \scsnowman[init,scale=14,hat,muffler,buttons,arms]%
+        \scsnowman[init,scale=14,body,hat,muffler,buttons,snow]%
+        \end{document}}%
+    \else
+      % In preamble; start document
+      \def\sctkzsym@documentsnowman{%
+        \pagestyle{empty}%
+        \begin{document}%
+        \centering
+        \scsnowman[init,scale=14,hat,muffler,buttons,snow]%
+        \scsnowman[init,scale=14,hat,muffler,buttons,arms]%
+        \scsnowman[init,scale=14,body,hat,muffler,buttons,snow]%
+        \end{document}}%
+    \fi
+  \else
+    % Before \documentclass{...}; load class and start document
+    \def\sctkzsym@documentsnowman{%
+      \documentclass{minimal}%
+      \begin{document}%
+      \centering
+      \scsnowman[init,scale=18,hat,muffler,buttons,snow]%
+      \scsnowman[init,scale=18,hat,muffler,buttons,arms]%
+      \scsnowman[init,scale=18,body,hat,muffler,buttons,snow]%
+      \end{document}}%
+  \fi\fi
+  \sctkzsym@documentsnowman
+}
+\fi
+%
+% change QED symbol (joke)
+\ifsctkzsym@qed
+  \def\sctkzsym@snowman@qedsymbol{\scsnowman[init,hat=true,muffler=red]}
+  \newcommand{\makeqedsnowman}{%
+    \ifx\qedsymbol\sctkzsym@snowman@qedsymbol\else
+      \let\sctkzsym@saved@qedsymbol\qedsymbol
+      \let\qedsymbol\sctkzsym@snowman@qedsymbol
+    \fi
+  }
+\fi
+%
+% change item label (joke)
+\ifsctkzsym@item
+  \def\sctkzsym@snowman@labelitemi{\scsnowman[init,hat=true,muffler=red]}
+  \def\sctkzsym@snowman@labelitemii{\scsnowman[init,hat=true,muffler=blue]}
+  \def\sctkzsym@snowman@labelitemiii{\scsnowman[init,hat=true,muffler=green]}
+  \def\sctkzsym@snowman@labelitemiv{\scsnowman[init,hat=true,muffler=yellow]}
+  \newcommand{\makeitemsnowman}{%
+    \ifx\labelitemi\sctkzsym@snowman@labelitemi\else
+      \let\sctkzsym@saved@labelitemi\labelitemi
+      \let\sctkzsym@saved@labelitemii\labelitemii
+      \let\sctkzsym@saved@labelitemiii\labelitemiii
+      \let\sctkzsym@saved@labelitemiv\labelitemiv
+      \let\labelitemi\sctkzsym@snowman@labelitemi
+      \let\labelitemii\sctkzsym@snowman@labelitemii
+      \let\labelitemiii\sctkzsym@snowman@labelitemiii
+      \let\labelitemiv\sctkzsym@snowman@labelitemiv
+    \fi
+  }
+\fi
+%
+%------------------------------- ZR something BEGIN
+
+% change enumerate label using \scsnowmannumeral (joke)
+% (this feature is `scsnowman'-specific, so the name-space
+%  is intentionally set to \scsnowman@...)
+
+% unique token
+\def\scsnowman@end{\scsnowman@end@}
+
+\let\scsnowman@eight\relax
+
+%% \scsnowman@scan@option\CScontinue{<prologue>}
+\def\scsnowman@scan@option#1#2{%
+  \scsnowman@scan@option@a#2[]\scsnowman@end#1%
+}
+\def\scsnowman@scan@option@a#1[#2]#3\scsnowman@end#4{%
+  #4{#2}%
+}
+
+\def\enumsnowman#1#{%
+  \scsnowman@scan@option\scsnowman@enumsnowman{#1}%
+}
+\def\scsnowman@enumsnowman#1#2{%
+  \scsnowmanNumeral{#1}{\@nameuse{c@#2}}%
+}
+
+% For use with \pagenumbering.
+\def\@enumsnowman{%
+  \scsnowmanNumeral{}%
+}
+
+\def\scsnowmannumeral#1#{%
+  \scsnowman@scan@option\scsnowmanNumeral{#1}%
+}
+
+% \scsnowmanNumeral{<option>}{<number>}
+% change 8 to snowman in counters (joke)
+% (this feature is `scsnowman'-specific, so the name-space
+%  is intentionally set to \scsnowman@...)
+
+% internal entry point
+\newcommand*\scsnowmanNumeral[2]{%
+  \expandafter\scsnowman@@numeral\number#2\relax\scsnowman@end{#1}%
+}
+\def\scsnowman@@numeral#1\relax#2\scsnowman@end#3{%
+  \scsnowman@numeral{#3}{#1}%
+}
+\DeclareRobustCommand*\scsnowman@numeral[2]{%
+  \begingroup
+    \def\scsnowman@eight{\scsnowman[#1]}%
+    \scsnowman@numeral@a#28\scsnowman@end
+  \endgroup
+}
+\def\scsnowman@numeral@a#18#2\scsnowman@end{%
+  \ifx\scsnowman@end#2\scsnowman@end
+    #1%
+  \else
+    #1\scsnowman@eight
+    \scsnowman@numeral@a#2\scsnowman@end
+  \fi
+}
+
+\providecommand*\pdfstringdefPreHook{}
+\g@addto@macro\pdfstringdefPreHook{%
+  \let\scsnowman@eight\scsnowman@hy@eight
+  \let\scsnowman@numeral\scsnowman@hy@numeral
+}
+\def\scsnowman@hy@numeral#1#2{% #1 is ignored
+  \scsnowman@numeral@a#28\scsnowman@end
+}
+
+\DeclareTextCommand{\scsnowman@hy@eight}{PU}{\9046\003}% U+2603
+\DeclareTextCommand{\scsnowman@hy@eight}{PD1}{8}%fallback
+\ifx\forcecjktoken\@undefined\else %upTeX
+  \begingroup
+    \kansujichar8="2603
+    \xdef\scsnowman@hy@eight{\kansuji8}
+  \endgroup
+\fi
+
+%------------------------------- ZR something END
+%
+% key initialization
+\newcommand\sctkzsym@snowman@initkeys{%
+  \def\sctkzsym@snowman@init{false}%
+  \def\sctkzsym@snowman@scale{1}%
+  \def\sctkzsym@snowman@shape{normal}%
+  \def\sctkzsym@snowman@body{false}%
+  \def\sctkzsym@snowman@eyes{true}%  default on
+  \def\sctkzsym@snowman@nose{false}%
+  \def\sctkzsym@snowman@mouthshape{smile}%
+  \def\sctkzsym@snowman@mouth{true}% default on
+  \def\sctkzsym@snowman@sweat{false}%
+  \def\sctkzsym@snowman@hat{false}%
+  \def\sctkzsym@snowman@arms{false}%
+  \def\sctkzsym@snowman@muffler{false}%
+  \def\sctkzsym@snowman@buttons{false}%
+  \def\sctkzsym@snowman@snow{false}%
+  \def\sctkzsym@snowman@note{false}%
+  \def\sctkzsym@snowman@adjustbaseline{false}%
+  \def\sctkzsym@snowman@mikan{false}%
+  \def\sctkzsym@snowman@leaf{false}%
+  \def\sctkzsym@snowman@broom{false}%
+}
+\newcommand{\sctkzsym@snowman@defaultkeys}{%
+  \sctkzsym@snowman@initkeys
+}
+\sctkzsym@snowman@defaultkeys
+%
+% key definitions
+\sctkzsym@define@key@withbool{snowman}{init}
+\sctkzsym@define@key@wodefault{snowman}{scale}
+\sctkzsym@define@key@wodefault{snowman}{shape}
+\sctkzsym@define@key@withbool{snowman}{body}
+\sctkzsym@define@key@withbool{snowman}{eyes}
+\sctkzsym@define@key@withbool{snowman}{nose}
+\sctkzsym@define@key@withword{snowman}{mouthshape}{smile,frown,tight}
+\sctkzsym@define@key@withbool{snowman}{mouth}
+\sctkzsym@define@key@withbool{snowman}{sweat}
+\sctkzsym@define@key@withbool{snowman}{hat}
+\sctkzsym@define@key@withbool{snowman}{arms}
+\sctkzsym@define@key@withbool{snowman}{muffler}
+\sctkzsym@define@key@withbool{snowman}{buttons}
+\sctkzsym@define@key@withbool{snowman}{snow}
+\sctkzsym@define@key@withbool{snowman}{note}
+\sctkzsym@define@key@withbool{snowman}{adjustbaseline}
+\sctkzsym@define@key@withbool{snowman}{mikan}
+\sctkzsym@define@key@withbool{snowman}{leaf}
+\sctkzsym@define@key@withbool{snowman}{broom}
+%
+\RequirePackage{etoolbox}
+\def\scmp@tempstr@true{true}
+\def\scmp@path#1#2#3{%
+  p:=#3;
+  \ifstrempty{#2}{
+    \ifbool{sctkzsym@snowman@#1}{
+	  \ifcsdef{sctkzsym@snowman@#1fill}{%
+	    \ifcsempty{sctkzsym@snowman@#1fill}{}{%
+	      fill p--cycle
+		  \ifcsequal{sctkzsym@snowman@#1fill}{scmp@tempstr@true}%
+		  {}{withcolor \noexpand\mpcolor{\csuse{sctkzsym@snowman@#1fill}}};
+	    }%
+	  }{}%
+	  \ifcsdef{sctkzsym@snowman@#1stroke}{%
+	    \ifcsempty{sctkzsym@snowman@#1stroke}{}{%
+	      draw p
+		  \ifcsequal{sctkzsym@snowman@#1stroke}{scmp@tempstr@true}%
+		  {}{withcolor \noexpand\mpcolor{\csuse{sctkzsym@snowman@#1stroke}}};
+	    }%
+	  }{}%
+	}{}%
+  }{
+    \ifbool{sctkzsym@snowman@#1}{%
+	  \ifcsempty{sctkzsym@snowman@#1fill}{}{%
+	    fill p--cycle
+		\ifcsequal{sctkzsym@snowman@#1fill}{scmp@tempstr@true}%
+		{}{withcolor \noexpand\mpcolor{\csuse{sctkzsym@snowman@#1fill}}};
+	  }%
+    }{}%
+	\ifcsempty{sctkzsym@snowman@#1stroke}{}{%
+	  draw p
+      \ifcsequal{sctkzsym@snowman@#1stroke}{scmp@tempstr@true}%
+	  {}{withcolor \noexpand\mpcolor{\csuse{sctkzsym@snowman@#1stroke}}};
+	}%
+  }%
+}
+
+% definition of \scsnowman[...]
+\DeclareRobustCommand\scsnowman[1][]{%
+  % key initialization using default
+  \sctkzsym@snowman@defaultkeys
+  % read <key>=<value>
+  \setkeys{sctkzsym@snowman}{#1}%
+  % check init; if init=true, initialize and read keys again
+  \sctkzsym@hndl@key@onlybool{snowman}{init}%
+  \ifsctkzsym@snowman@init
+    \sctkzsym@snowman@initkeys
+    \setkeys{sctkzsym@snowman}{#1,init=false}%
+  \fi
+  %
+  % check body; determine whether "black snowman" or "white snowman"
+  \sctkzsym@hndl@key@withbool{snowman}{body}%
+  \ifsctkzsym@snowman@body % "black snowman"; black snow; white eyes/mouth/stroke
+    \edef\sctkzsym@snowman@bodystroke{\sctkzsym@snowman@body}%
+    \edef\sctkzsym@snowman@bodyfill{\sctkzsym@snowman@body}%
+    \edef\sctkzsym@snowman@snowstroke{\sctkzsym@snowman@snow}%
+    \edef\sctkzsym@snowman@snowfill{\sctkzsym@snowman@snow}%
+    \edef\sctkzsym@snowman@eyesfill{\sctkzsym@defaultanticolor}%
+    \edef\sctkzsym@snowman@nosestroke{\sctkzsym@defaultanticolor}%
+    \edef\sctkzsym@snowman@nosefill{\sctkzsym@snowman@nose}%
+    \edef\sctkzsym@snowman@mouthstroke{\sctkzsym@defaultanticolor}%
+    \edef\sctkzsym@snowman@sweatstroke{\sctkzsym@defaultanticolor}%
+    \edef\sctkzsym@snowman@sweatfill{\sctkzsym@snowman@sweat}%
+    \edef\sctkzsym@snowman@mufflerstroke{\sctkzsym@defaultanticolor}%
+    \edef\sctkzsym@snowman@mufflerfill{\sctkzsym@snowman@muffler}%
+    \edef\sctkzsym@snowman@buttonsstroke{\sctkzsym@defaultanticolor}%
+    \edef\sctkzsym@snowman@buttonsfill{\sctkzsym@snowman@buttons}%
+  \else                    % "white snowman"; white snow; black eyes/mouth/stroke; bodystroke should be there
+    \edef\sctkzsym@snowman@bodystroke{\sctkzsym@defaultcolor}%
+    \edef\sctkzsym@snowman@bodyfill{}%
+    \edef\sctkzsym@snowman@snowstroke{\sctkzsym@snowman@snow}%
+    \edef\sctkzsym@snowman@snowfill{}%
+    \edef\sctkzsym@snowman@eyesfill{\sctkzsym@defaultcolor}%
+    \edef\sctkzsym@snowman@nosestroke{\sctkzsym@snowman@nose}%
+    \edef\sctkzsym@snowman@nosefill{\sctkzsym@snowman@nose}%
+    \edef\sctkzsym@snowman@mouthstroke{\sctkzsym@defaultcolor}%
+    \edef\sctkzsym@snowman@sweatstroke{\sctkzsym@snowman@sweat}%
+    \edef\sctkzsym@snowman@sweatfill{\sctkzsym@defaultanticolor}%
+    \edef\sctkzsym@snowman@mufflerstroke{\sctkzsym@snowman@muffler}%
+    \edef\sctkzsym@snowman@mufflerfill{\sctkzsym@snowman@muffler}%
+    \edef\sctkzsym@snowman@buttonsstroke{\sctkzsym@snowman@buttons}%
+    \edef\sctkzsym@snowman@buttonsfill{\sctkzsym@snowman@buttons}%
+  \fi
+  % check eyes (currently eyes=<color> not supported; falling back to default-(anti)color)
+  \sctkzsym@hndl@key@withbool{snowman}{eyes}%
+  % check nose
+  \sctkzsym@hndl@key@withbool{snowman}{nose}%
+  % check mouth (currently mouth=<color> not supported; falling back to default-(anti)color)
+  \sctkzsym@hndl@key@withword{snowman}{mouthshape}%
+  \sctkzsym@hndl@key@withbool{snowman}{mouth}%
+  % check sweat
+  \sctkzsym@hndl@key@withbool{snowman}{sweat}%
+  % check hat
+  \sctkzsym@hndl@key@withbool{snowman}{hat}%
+  \edef\sctkzsym@snowman@hatstroke{\sctkzsym@snowman@hat}%
+  \edef\sctkzsym@snowman@hatfill{\sctkzsym@snowman@hat}%
+  % check arms
+  \sctkzsym@hndl@key@withbool{snowman}{arms}%
+  \edef\sctkzsym@snowman@armsstroke{\sctkzsym@snowman@arms}%
+  \edef\sctkzsym@snowman@armsfill{\sctkzsym@snowman@arms}%
+  % check muffler
+  \sctkzsym@hndl@key@withbool{snowman}{muffler}%
+  % check buttons
+  \sctkzsym@hndl@key@withbool{snowman}{buttons}%
+  % check snow
+  \sctkzsym@hndl@key@withbool{snowman}{snow}%
+  % check note
+  \sctkzsym@hndl@key@withbool{snowman}{note}%
+%%%  \edef\sctkzsym@snowman@notefill{\sctkzsym@snowman@note}%
+%%%  \edef\sctkzsym@snowman@notepath{\path[fill=\sctkzsym@snowman@notefill]}%
+  % check adjustbaseline
+  \sctkzsym@hndl@key@onlybool{snowman}{adjustbaseline}%
+  % check mikan/leaf
+  \sctkzsym@hndl@key@withbool{snowman}{mikan}%
+  \sctkzsym@hndl@key@withbool{snowman}{leaf}%
+  \edef\sctkzsym@snowman@mikanstroke{\sctkzsym@snowman@mikan}%
+  \edef\sctkzsym@snowman@mikanfill{\sctkzsym@snowman@mikan}%
+  \edef\sctkzsym@snowman@leafstroke{\sctkzsym@snowman@leaf}%
+  \edef\sctkzsym@snowman@leaffill{\sctkzsym@snowman@leaf}%
+  % check broom
+  \sctkzsym@hndl@key@withbool{snowman}{broom}%
+  \edef\sctkzsym@snowman@broomstroke{\sctkzsym@snowman@broom}%
+  %
+  % drawing snowman
+  \set@sctkzsym@coord@scl{\sctkzsym@snowman@scale}%
+  \ifdim\sctkzsym@coord@scl<\z@\set@sctkzsym@coord@scl{-\sctkzsym@snowman@scale}\fi%
+  %
+  %%%%% input from def file
+  %
+  \expandafter\ifx\csname sctkzsym@snowman@shape@\sctkzsym@snowman@shape\endcsname\relax
+    \PackageError{scsnowman}{%
+      Unsupported value `\sctkzsym@snowman@shape' for shape}\@ehc
+  \else
+    \csname sctkzsym@snowman@shape@\sctkzsym@snowman@shape\endcsname
+  \fi
+  %
+  %%%%%
+  %
+  % key initialization using default
+  \sctkzsym@snowman@defaultkeys
+}
+%
+% definition of \scsnowmandefault{...}
+\newcommand{\scsnowmandefault}[1]{%
+  \renewcommand{\sctkzsym@snowman@defaultkeys}{%
+    % key initialization
+    \sctkzsym@snowman@initkeys
+    % read <key>=<value> (init=true is silently ignored)
+    \setkeys{sctkzsym@snowman}{#1,init=false}%
+  }%
+  \sctkzsym@snowman@defaultkeys
+}
+%
+% definition of \usescsnowmanlibrary{...}
+\newcommand{\usescsnowmanlibrary}[1]{%
+  \edef\@tempa{\zap@space#1 \@empty}%
+  \@for\@tempa:=\@tempa\do{%
+    \chardef\sctkzsym@catcode=\catcode`\@\relax
+    \makeatletter\input{scsnowman-mp-\@tempa.def}%
+    \catcode`\@=\sctkzsym@catcode\relax}%
+}
+\@onlypreamble\usescsnowmanlibrary
+%
+% load shape definitions
+\usescsnowmanlibrary{normal}% default
+%
+\endinput
+%%
+%% End of file `scsnowman-mp.sty'.
