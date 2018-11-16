@@ -1,13 +1,21 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{scsnowman-mp-normal.def}[2018-00-00 scsnowman definition (normal, MetaPost)]
+\ProvidesFile{scsnowman-mp-normal.def}[2018-11-16 scmpsnowman definition (normal)]
 \ifdefined\scmp@unit\else\newdimen\scmp@unit\fi
 \def\sctkzsym@snowman@shape@normal{%
-  \scmp@unit=1.8ex\scmp@unit=\strip@pt\sctkzsym@coord@scl\scmp@unit
-  {\setbox\z@=\hbox to\scmp@unit{\yoko\hss\sctkzsym@beginyokobox
+  \setlength{\scmp@unit}{1.8ex}%
+  \setlength{\scmp@unit}{\sctkzsym@snowman@scale\scmp@unit}%
+  \setlength{\sctkzsym@coord@baseline}{%
+    \ifsctkzsym@snowman@adjustbaseline
+      0.144ex\relax
+    \else
+      \z@
+    \fi}%
+  \setlength{\sctkzsym@coord@baseline}{\sctkzsym@snowman@scale\sctkzsym@coord@baseline}%
+  {\setbox\z@=\sctkzsym@beginyokobox
   \scmp@env
     numeric u; u:=\mpdim{\scmp@unit}; path p;
-	pickup pencircle scaled (\strip@pt\sctkzsym@coord@scl*\mpdim{0.025ex});
-	linecap:=rounded; linejoin:=rounded; 
+	pickup pencircle scaled (\sctkzsym@snowman@scale*\mpdim{0.025ex});
+	linecap:=rounded; linejoin:=rounded;
 	%% scale=\sctkzsym@snowman@scale,baseline=\sctkzsym@coord@baseline*\sctkzsym@coord@scl]
     %%\useasboundingbox(0,0) rectangle (1,1);
     \scmp@path{body}*{% body (IPA-like)
@@ -65,16 +73,17 @@
           cycle
 	  }
     \fi
-	begingroup linecap:=butt;
-	  pickup pencircle scaled (\strip@pt\sctkzsym@coord@scl*\mpdim{0.08ex});
-      \scmp@path{broom}{}{ (0.03u,0.06u) -- (0.12u,0.50u) }
-	  pickup pencircle scaled (\strip@pt\sctkzsym@coord@scl*\mpdim{0.03ex});
-      \scmp@path{broom}{}{ (0.11u,0.50u) -- (0.06u,0.75u) }
-      \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.12u,0.72u) }
-      \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.18u,0.76u) }
-      \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.21u,0.70u) }
-      \scmp@path{broom}{}{ (0.13u,0.50u) -- (0.27u,0.74u) }
-    endgroup;
+	linecap:=butt;
+	pickup pencircle scaled (\sctkzsym@snowman@scale*\mpdim{0.08ex});
+    \scmp@path{broom}{}{ (0.03u,0.06u) -- (0.12u,0.50u) }
+	pickup pencircle scaled (\sctkzsym@snowman@scale*\mpdim{0.03ex});
+    \scmp@path{broom}{}{ (0.11u,0.50u) -- (0.06u,0.75u) }
+    \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.12u,0.72u) }
+    \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.18u,0.76u) }
+    \scmp@path{broom}{}{ (0.12u,0.50u) -- (0.21u,0.70u) }
+    \scmp@path{broom}{}{ (0.13u,0.50u) -- (0.27u,0.74u) }
+	pickup pencircle scaled (\sctkzsym@snowman@scale*\mpdim{0.025ex});
+	linecap:=rounded; linejoin:=rounded;
 	\scmp@path{arms}{}{% right arm (SourceHanSans-like)
         (0.20u,0.31u) .. controls (0.19u,0.33u) and (0.14u,0.41u) ..
         (0.13u,0.42u) .. controls (0.12u,0.43u) and (0.10u,0.43u) ..
@@ -172,7 +181,7 @@
 %        cycle;
 %    \fi
   \scmp@env@end
-  \sctkzsym@endyokobox\hss}%
+  \sctkzsym@endyokobox%
   \ht\z@=\scmp@unit\dp\z@=\z@\leavevmode\box\z@}%
 }
 \endinput

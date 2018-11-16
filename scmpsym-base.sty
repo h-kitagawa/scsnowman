@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{scmpsym-base}[2018-00-00 based on sctkzsym-base.sty]
+\ProvidesPackage{scmpsym-base}[2018-11-16 Base for emoji variants using MetaPost]
 \RequirePackage{ifluatex}
 \ifluatex
   \RequirePackage{luamplib}
@@ -10,7 +10,6 @@
 	\expandafter\scmp@env@begin\scmp@env@body
 	\end{mplibcode}\egroup
   }
-\typeout{\meaning\mplibcolor}
 \else
   \RequirePackage{gmp,xcolor}
 \fi
@@ -140,10 +139,8 @@
 %
 % setup for tikzpicture
 \newlength{\sctkzsym@coord@baseline}
-\newlength{\sctkzsym@coord@scl}
-\newcommand*{\set@sctkzsym@coord@scl}[1]{\setlength{\sctkzsym@coord@scl}{#1\p@}}
-\newcommand{\sctkzsym@beginyokobox}{\ifdefined\tate\leavevmode\hbox\bgroup\yoko\fi}
-\newcommand{\sctkzsym@endyokobox}{\ifdefined\tate\egroup\fi}
+\newcommand{\sctkzsym@beginyokobox}{\hbox to\scmp@unit\bgroup\ifdefined\tate\yoko\fi\hss}
+\newcommand{\sctkzsym@endyokobox}{\hss\egroup}
 \newcommand{\sctkzsym@defaultcolor}{black}
 \newcommand{\sctkzsym@defaultanticolor}{white}
 %

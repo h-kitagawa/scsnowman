@@ -1,8 +1,8 @@
 %%
-%% This is file `scsnowman-mp.sty',
+%% This is file `scmpsnowman.sty',
 %% based on scsnowman.sty (a part of scsnowman package).
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{scsnowman-mp}[2018-00-00]
+\ProvidesPackage{scmpsnowman}[2018-11-17 Snowman variants using MetaPost]
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{scmpsym-base}}
 \ProcessOptions\relax
 \RequirePackage{scmpsym-base}
@@ -348,8 +348,6 @@
   \edef\sctkzsym@snowman@broomstroke{\sctkzsym@snowman@broom}%
   %
   % drawing snowman
-  \set@sctkzsym@coord@scl{\sctkzsym@snowman@scale}%
-  \ifdim\sctkzsym@coord@scl<\z@\set@sctkzsym@coord@scl{-\sctkzsym@snowman@scale}\fi%
   %
   %%%%% input from def file
   %
@@ -382,7 +380,7 @@
   \edef\@tempa{\zap@space#1 \@empty}%
   \@for\@tempa:=\@tempa\do{%
     \chardef\sctkzsym@catcode=\catcode`\@\relax
-    \makeatletter\input{scsnowman-mp-\@tempa.def}%
+    \makeatletter\input{scmpsnowman-\@tempa.def}%
     \catcode`\@=\sctkzsym@catcode\relax}%
 }
 \@onlypreamble\usescsnowmanlibrary

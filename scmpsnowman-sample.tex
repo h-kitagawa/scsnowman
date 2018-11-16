@@ -3,8 +3,8 @@
 \usepackage{lltjext}
 \usepackage[margin=21truemm]{geometry}
 \usepackage[svgnames]{xcolor}
-\usepackage{scsnowman-mp}
-\title{\textsf{scsnowman}パッケージの実用例}
+\usepackage{scmpsnowman}
+\title{\textsf{scmpsnowman}パッケージの実用例}
 \begin{document}
 \maketitle
 
@@ -152,4 +152,18 @@ The World Day of Snowman:
 \scsnowman[muffler=Red,arms=Brown,buttons=Green,broom=DarkGoldenrod]
 \scsnowman[body,muffler=Red,arms=Brown,nose=Orange]
 
+\newpage
+
+ゆきだるま：
+\scsnowman[scale=1,hat,snow]%
+\scsnowman[scale=3,hat,snow]%
+\scsnowman[scale=5,snow,hat]%
+
+
+枠線付き：
+{\fboxsep=0pt
+\fbox{\scsnowman[scale=1,hat,snow]}%
+\fbox{\scsnowman[scale=3,hat,snow]}%
+\fbox{\scsnowman[scale=5,hat,snow]}%
+}
 \end{document}
