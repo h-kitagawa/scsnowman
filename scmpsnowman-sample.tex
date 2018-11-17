@@ -1,6 +1,10 @@
-
-\documentclass[twocolumn]{ltjsarticle}
-\usepackage{lltjext}
+\iftrue % true if use LuaTeX-ja
+  \documentclass[twocolumn]{ltjsarticle}
+  \usepackage{lltjext}
+\else
+  \documentclass[twocolumn]{article}
+  \usepackage{fontspec}\setmainfont{ipaexm.ttf}\setsansfont{ipaexg.ttf}\def\zw{em}
+\fi
 \usepackage[margin=21truemm]{geometry}
 \usepackage[svgnames]{xcolor}
 \usepackage{scmpsnowman}
@@ -70,6 +74,10 @@
 {\color{green}テキストが緑色の場合\scsnowman[hat,muffler=red]}}、
 元通り\scsnowman[hat,muffler=red]。
 
+\textbf{周囲の色に追随するのは\textsf{xcolor}パッケージが読み込まれている
+  場合のみです（\textsf{scmpsnowman}パッケージは\textsf{color}パッケージのみを
+  標準で読み込みます）．}
+
 \newpage
 
 \scsnowmandefault{body,hat,snow,muffler}%
@@ -137,13 +145,14 @@ Text,
 \scsnowman[adjustbaseline,scale=7],
 T.
 \end{minipage}\quad
+\ifdefined\tate
 \begin{minipage}<t>{12\zw}
 \scsnowmandefault{}
 縦書ーきで\scsnowman[hat,muffler=red]のテスト。
 私の大好きな\scsnowman[scale=2,muffler]\scsnowman[scale=2,hat]がたくさん。
 {\color{red}色が\scsnowman[body]ついても、勿論大丈夫。}
 \end{minipage}
-
+\fi
 \scsnowmandefault{adjustbaseline,scale=5.5}%
 お正月：\scsnowman[eyes=false,mouth=false,mikan]%
 \scsnowman[eyes=false,mouth=false,mikan=DarkOrange,leaf=DarkOliveGreen]

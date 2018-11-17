@@ -1,24 +1,19 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{scmpsym-base}[2018-11-16 Base for emoji variants using MetaPost]
-\RequirePackage{ifluatex}
-\ifluatex
-  \RequirePackage{luamplib}
-  \def\scmp@env@begin{\begin{mplibcode}}
-  \long\def\scmp@env#1\scmp@env@end{%
-	\bgroup\everymplib{beginfig(0);}\everyendmplib{endfig;}%
-	\edef\scmp@env@body{#1}%
-	\expandafter\scmp@env@begin\scmp@env@body
-	\end{mplibcode}\egroup
-  }
-  \def\scmpifyoko#1{%
-	\unless\ifnum\ltjgetparameter{direction}=3\relax#1\fi
-  }
-\else
-  \RequirePackage{gmp,xcolor}
-\fi
+\ProvidesPackage{scmpsym-base}[2018-11-17 Base for emoji variants using MetaPost]
+\RequirePackage{luamplib}
+\def\scmp@env@begin{\begin{mplibcode}}
+\long\def\scmp@env#1\scmp@env@end{%
+  \bgroup\everymplib{beginfig(0);}\everyendmplib{endfig;}%
+  \edef\scmp@env@body{#1}%
+  \expandafter\scmp@env@begin\scmp@env@body
+  \end{mplibcode}\egroup
+}
+\def\scmpifyoko#1{%
+  \unless\ifdefined\ltjgetparameter#1\else\unless\ifnum\ltjgetparameter{direction}=3\relax#1\fi\fi
+}
 \RequirePackage{keyval}
 %
-\ifx\kanjiskip\@undefined\else
+\ifdefined\kanjiskip
   \IfFileExists{pxeveryshi.sty}{\RequirePackage{pxeveryshi}}{}
 \fi
 %
@@ -144,7 +139,9 @@
 \newlength{\sctkzsym@coord@baseline}
 \newcommand{\sctkzsym@beginyokobox}{\hbox to\scmp@unit\bgroup\ifdefined\tate\yoko\fi\hss}
 \newcommand{\sctkzsym@endyokobox}{\hss\egroup}
-\newcommand{\sctkzsym@defaultcolor}{black}
+\definecolor{scsnowmansavedcolor}{gray}{0}
+%\newcommand{\sctkzsym@defaultcolor}{black}
+\newcommand{\sctkzsym@defaultcolor}{scsnowmansavedcolor}
 \newcommand{\sctkzsym@defaultanticolor}{white}
 %
 \endinput

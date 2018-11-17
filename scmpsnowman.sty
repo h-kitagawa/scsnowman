@@ -5,7 +5,7 @@
 \ProvidesPackage{scmpsnowman}[2018-11-17 Snowman variants using MetaPost]
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{scmpsym-base}}
 \ProcessOptions\relax
-\RequirePackage{scmpsym-base}
+\RequirePackage{color,scmpsym-base}
 %
 % make document snowman (joke)
 \ifsctkzsym@document
@@ -263,6 +263,7 @@
 
 % definition of \scsnowman[...]
 \DeclareRobustCommand\scsnowman[1][]{%
+  \ifdefined\colorlet\colorlet{scsnowmansavedcolor}{.}\fi
   % key initialization using default
   \sctkzsym@snowman@defaultkeys
   % read <key>=<value>

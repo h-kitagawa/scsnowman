@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{scsnowman-mp-normal.def}[2018-11-16 scmpsnowman definition (normal)]
+\ProvidesFile{scsnowman-mp-normal.def}[2018-11-17 scmpsnowman definition (normal)]
 \ifdefined\scmp@unit\else\newdimen\scmp@unit\fi
 \def\sctkzsym@snowman@shape@normal{%
   \setlength{\scmp@unit}{1.8ex}%
