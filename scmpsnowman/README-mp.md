@@ -12,8 +12,5 @@ On the other hand, this package requires following packages:
  - etoolbox
  - keyval
 
-Loading the xcolor package is highly recommended, since "getting
-current foreground color" requires it. 
-In other words, {\color{red}\scsnowman}} draws a snowman in black, 
-not red, without loading the xcolor package.
+The xcolor package is not required, but highly recommended.
 

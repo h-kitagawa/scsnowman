@@ -263,7 +263,11 @@
 
 % definition of \scsnowman[...]
 \DeclareRobustCommand\scsnowman[1][]{%
-  \ifdefined\colorlet\colorlet{scsnowmansavedcolor}{.}\fi
+  \ifdefined\colorlet
+	\colorlet{scsnowmansavedcolor}{.}%
+  \else
+	\cslet{\string\color @scsnowmansavedcolor}{\current@color}%
+  \fi
   % key initialization using default
   \sctkzsym@snowman@defaultkeys
   % read <key>=<value>
