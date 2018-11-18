@@ -1,14 +1,16 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{scsnowman-mp-normal.def}[2018-11-17 scmpsnowman definition (normal)]
+\ProvidesFile{scsnowman-mp-normal.def}[2018-11-18 scmpsnowman definition (normal)]
 \ifdefined\scmp@unit\else\newdimen\scmp@unit\fi
 \def\sctkzsym@snowman@shape@normal{%
-  \setlength{\scmp@unit}{1.8ex}%
-  \setlength{\scmp@unit}{\sctkzsym@snowman@scale\scmp@unit}%
+  \scmp@dim@scale{\scmp@unit}{1.8ex}%
   {\setbox\z@=\sctkzsym@beginyokobox
   \scmp@env
     numeric u; u:=\mpdim{\scmp@unit}; path p;
 	pickup pencircle scaled (\sctkzsym@snowman@scale*\mpdim{0.025ex});
 	linecap:=rounded; linejoin:=rounded;
+	\ifdefined\directlua\else % MetaPost 2.00 has a bug
+	  draw (0.5u,0.5u)--(0.5u,0.5u) withcolor 1;
+	\fi
     \scmp@path{body}*{% body (IPA-like)
         (0.5u, 0.72u) .. controls (0.64u,0.72u) and (0.76u,0.65u) ..
         (0.76u,0.55u) .. controls (0.76u,0.51u) and (0.72u,0.47u) ..
@@ -173,10 +175,12 @@
     }
   \scmp@env@end
   \sctkzsym@endyokobox\leavevmode%
-  \setlength{\sctkzsym@coord@baseline}{0.144ex}%
-  \setlength{\sctkzsym@coord@baseline}{\sctkzsym@snowman@scale\sctkzsym@coord@baseline}%
-  \ht\z@=\dimexpr\scmp@unit-\sctkzsym@coord@baseline\relax
-  \dp\z@=\sctkzsym@coord@baseline
+  \scmp@dim@scale{\sctkzsym@coord@baseline}{0.144ex}%
+  \setbox\tw@=\hbox{\ifdefined\tate\yoko\fi
+    % change box dimension in yoko direction.
+    \ht\z@=\dimexpr\scmp@unit-\sctkzsym@coord@baseline\relax
+    \dp\z@=\sctkzsym@coord@baseline
+  }%
   \scmpifyoko{%
     \ifsctkzsym@snowman@adjustbaseline\else\raise\sctkzsym@coord@baseline\fi
   }\box\z@}%

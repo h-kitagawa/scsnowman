@@ -1,21 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{scmpsym-base}[2018-11-17 Base for emoji variants using MetaPost]
-\RequirePackage{luamplib}
-\def\scmp@env@begin{\begin{mplibcode}}
-\long\def\scmp@env#1\scmp@env@end{%
-  \bgroup\everymplib{beginfig(0);}\everyendmplib{endfig;}%
-  \edef\scmp@env@body{#1}%
-  \expandafter\scmp@env@begin\scmp@env@body
-  \end{mplibcode}\egroup
-}
-\def\scmpifyoko#1{%
-  \unless\ifdefined\ltjgetparameter#1\else\unless\ifnum\ltjgetparameter{direction}=3\relax#1\fi\fi
-}
-\RequirePackage{keyval}
-%
-\ifdefined\kanjiskip
-  \IfFileExists{pxeveryshi.sty}{\RequirePackage{pxeveryshi}}{}
-\fi
+\ProvidesPackage{scmpsym-base}[2018-11-18 Base for emoji variants using MetaPost]
 %
 % prepare for options
 \newif\ifsctkzsym@document
@@ -31,6 +15,53 @@
 \DeclareOption{noitemX}{\sctkzsym@itemfalse}
 \ExecuteOptions{documentX,qedX,itemX}
 \ProcessOptions\relax
+
+\ifdefined\directlua
+  \RequirePackage{luamplib}
+  \def\scmp@env@begin{\begin{mplibcode}}
+  \long\def\scmp@env#1\scmp@env@end{%
+    \bgroup\everymplib{beginfig(0);}\everyendmplib{endfig;}%
+    \edef\scmp@env@body{#1}%
+    \expandafter\scmp@env@begin\scmp@env@body
+    \end{mplibcode}\egroup
+  }
+  \def\scmpifyoko#1{%
+    \unless\ifdefined\ltjgetparameter#1\else\unless
+	\ifnum\ltjgetparameter{direction}=3\relax#1\fi\fi
+  }
+  \csletcs{iftdir}{iffalse}
+\else
+  \RequirePackage{gmp}
+  \long\def\scmp@env#1\scmp@env@end{\bgroup%
+	\let\mpcolor\relax\edef\scmp@env@body{#1}%
+    \expandafter\scmp@env@mpcolor\scmp@env@body\@nil\@nil\@nil
+	\def\mpcolor##1{\csname mpxcolor@##1\endcsname}%
+	\begin{mpost}\scmp@env@body\end{mpost}%
+  \egroup}
+  \def\mplibcolor#1{%
+	\def\set@color{\edef#1{%
+	  1 withprescript "\expandafter\c@lor@to@ps\current@color\@@"}}%
+	\color
+  }
+  \let\mpcolor\relax
+  \def\scmp@env@mpcolor@a#1#2\@nil{\scmp@env@mpcolor#2\@nil}
+  \def\scmp@env@mpcolor#1#2#3\@nil{%
+    \ifx#1\@nil\let\next=\@gobbletwo
+	\else\ifx#1\mpcolor
+      \expandafter\mplibcolor\csname mpxcolor@#2\endcsname{#2}%
+	  \let\next=\scmp@env@mpcolor@a
+    \else\let\next=\scmp@env@mpcolor\fi\fi
+    \next{#2}#3\@nil
+  }
+  \def\scmpifyoko#1{%
+    \ifdefined\tate\unless\iftdir#1\fi\else#1\fi
+  }
+\fi
+\RequirePackage{keyval}
+%
+\ifdefined\kanjiskip
+  \IfFileExists{pxeveryshi.sty}{\RequirePackage{pxeveryshi}}{}
+\fi
 %
 % save QED symbol before change (joke)
 \ifsctkzsym@qed
@@ -143,6 +174,7 @@
 %\newcommand{\sctkzsym@defaultcolor}{black}
 \newcommand{\sctkzsym@defaultcolor}{scsnowmansavedcolor}
 \newcommand{\sctkzsym@defaultanticolor}{white}
+\def\scmp@dim@scale#1#2{#1=#2\relax#1=\sctkzsym@snowman@scale#1\relax}
 %
 \endinput
 %%

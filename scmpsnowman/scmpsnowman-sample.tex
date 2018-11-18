@@ -1,3 +1,4 @@
+\ifdefined\directlua
 \iftrue % true if use LuaTeX-ja
   \documentclass[twocolumn]{ltjsarticle}
   \usepackage{lltjext}
@@ -5,8 +6,13 @@
   \documentclass[twocolumn]{article}
   \usepackage{fontspec}\setmainfont{ipaexm.ttf}\setsansfont{ipaexg.ttf}\def\zw{em}
 \fi
+\else
+  \documentclass[twocolumn]{jsarticle}
+  \usepackage{plext}\def\zw{zw}
+\fi
 \usepackage[margin=21truemm]{geometry}
 \usepackage[svgnames]{xcolor}
+\usepackage[shellescape]{gmp}
 \usepackage{scmpsnowman}
 \title{\textsf{scmpsnowman}パッケージの実用例}
 \begin{document}
@@ -74,11 +80,6 @@
 {\color{green}テキストが緑色の場合\scsnowman[hat,muffler=red]}}、
 元通り\scsnowman[hat,muffler=red]。
 
-\textbf{周囲の色に追随するのは\textsf{xcolor}パッケージが読み込まれている
-  場合のみです（\textsf{scmpsnowman}パッケージは\textsf{color}パッケージのみを
-  標準で読み込みます）．}
-
-%\end{document}
 \newpage
 
 \scsnowmandefault{body,hat,snow,muffler}%
