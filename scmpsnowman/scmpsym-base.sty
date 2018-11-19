@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{scmpsym-base}[2018-11-18 Base for emoji variants using MetaPost]
+\ProvidesPackage{scmpsym-base}[2018-11-19 Base for emoji variants using MetaPost]
 %
 % prepare for options
 \newif\ifsctkzsym@document
@@ -40,7 +40,8 @@
   \egroup}
   \def\mplibcolor#1{%
 	\def\set@color{\edef#1{%
-	  1 withprescript "\expandafter\c@lor@to@ps\current@color\@@"}}%
+	  \ifdefined\directlua1\fi
+	  withprescript "\expandafter\c@lor@to@ps\current@color\@@"}}%
 	\color
   }
   \let\mpcolor\relax
