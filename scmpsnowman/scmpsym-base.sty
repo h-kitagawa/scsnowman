@@ -31,6 +31,7 @@
   }
   \csletcs{iftdir}{iffalse}
 \else
+  \unless\ifdefined\tate\csletcs{iftdir}{iffalse}\fi
   \RequirePackage{gmp}
   \long\def\scmp@env#1\scmp@env@end{\bgroup%
 	\let\mpcolor\relax\edef\scmp@env@body{#1}%

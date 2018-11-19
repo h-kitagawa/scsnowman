@@ -6,13 +6,17 @@
   \documentclass[twocolumn]{article}
   \usepackage{fontspec}\setmainfont{ipaexm.ttf}\setsansfont{ipaexg.ttf}\def\zw{em}
 \fi
+\else\ifdefined\XeTeXcharclass
+  \documentclass[twocolumn]{article}
+  \usepackage{fontspec}\setmainfont{ipaexm.ttf}\setsansfont{ipaexg.ttf}\def\zw{em}
+  \usepackage[shellescape,clean=mp]{gmp}
 \else
   \documentclass[twocolumn]{jsarticle}
   \usepackage{plext}\def\zw{zw}
+  \usepackage[shellescape,clean=mp]{gmp}
 \fi
 \usepackage[margin=21truemm]{geometry}
 \usepackage[svgnames]{xcolor}
-\usepackage[shellescape]{gmp}
 \usepackage{scmpsnowman}
 \title{\textsf{scmpsnowman}パッケージの実用例}
 \begin{document}

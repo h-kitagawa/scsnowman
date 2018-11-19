@@ -5,6 +5,7 @@
 \ProvidesPackage{scmpsnowman}[2018-11-19 Snowman variants using MetaPost]
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{scmpsym-base}}
 \ProcessOptions\relax
+\RequirePackage{etoolbox}
 \RequirePackage{color,scmpsym-base}
 %
 % make document snowman (joke)
@@ -224,43 +225,36 @@
 \sctkzsym@define@key@withbool{snowman}{leaf}
 \sctkzsym@define@key@withbool{snowman}{broom}
 %
-\RequirePackage{etoolbox}
 \def\scmp@tempstr@true{true}
+\def\scmp@color#1{%
+  \ifcsequal{#1}{scmp@tempstr@true}{}{%
+    \ifdefined\directlua withcolor\else withoutcolor\space\fi
+	\noexpand\mpcolor{\csuse{#1}}%
+  }%
+}
 \def\scmp@path#1#2#3{%
   p:=#3;
-  \ifstrempty{#2}{
-    \ifbool{sctkzsym@snowman@#1}{
+  \ifstrempty{#2}{%
+    \ifbool{sctkzsym@snowman@#1}{%
 	  \ifcsdef{sctkzsym@snowman@#1fill}{%
 	    \ifcsempty{sctkzsym@snowman@#1fill}{}{%
-	      fill p--cycle
-		  \ifcsequal{sctkzsym@snowman@#1fill}{scmp@tempstr@true}{}%
-		  {\ifdefined\directlua withcolor\else withoutcolor\space\fi
-		   \noexpand\mpcolor{\csuse{sctkzsym@snowman@#1fill}}};
+	      fill p--cycle \scmp@color{sctkzsym@snowman@#1fill};
 	    }%
 	  }{}%
 	  \ifcsdef{sctkzsym@snowman@#1stroke}{%
 	    \ifcsempty{sctkzsym@snowman@#1stroke}{}{%
-	      draw p
-		  \ifcsequal{sctkzsym@snowman@#1stroke}{scmp@tempstr@true}{}%
-		  {\ifdefined\directlua withcolor\else withoutcolor\space\fi
-		   \noexpand\mpcolor{\csuse{sctkzsym@snowman@#1stroke}}};
+	      draw p \scmp@color{sctkzsym@snowman@#1stroke};
 	    }%
 	  }{}%
 	}{}%
   }{
     \ifbool{sctkzsym@snowman@#1}{%
 	  \ifcsempty{sctkzsym@snowman@#1fill}{}{%
-	    fill p--cycle
-		\ifcsequal{sctkzsym@snowman@#1fill}{scmp@tempstr@true}{}%
-		{\ifdefined\directlua withcolor\else withoutcolor\space\fi
-		 \noexpand\mpcolor{\csuse{sctkzsym@snowman@#1fill}}};
+	    fill p--cycle \scmp@color{sctkzsym@snowman@#1fill};
 	  }%
     }{}%
 	\ifcsempty{sctkzsym@snowman@#1stroke}{}{%
-	  draw p
-      \ifcsequal{sctkzsym@snowman@#1stroke}{scmp@tempstr@true}{}%
-	  {\ifdefined\directlua withcolor\else withoutcolor\space\fi
-	   \noexpand\mpcolor{\csuse{sctkzsym@snowman@#1stroke}}};
+	  draw p \scmp@color{sctkzsym@snowman@#1stroke};
 	}%
   }%
 }
