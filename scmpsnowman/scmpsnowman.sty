@@ -2,11 +2,12 @@
 %% This is file `scmpsnowman.sty',
 %% based on scsnowman.sty (a part of scsnowman package).
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{scmpsnowman}[2018-11-19 Snowman variants using MetaPost]
+\ProvidesPackage{scmpsnowman}[2018-12-02 Snowman variants using MetaPost]
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{scmpsym-base}}
 \ProcessOptions\relax
 \RequirePackage{etoolbox}
-\RequirePackage{color,scmpsym-base}
+\RequirePackage{xcolor}
+\RequirePackage{scmpsym-base}
 %
 % make document snowman (joke)
 \ifsctkzsym@document
@@ -261,11 +262,7 @@
 
 % definition of \scsnowman[...]
 \DeclareRobustCommand\scsnowman[1][]{%
-  \ifdefined\colorlet
-	\colorlet{scsnowmansavedcolor}{.}%
-  \else
-	\cslet{\string\color @scsnowmansavedcolor}{\current@color}%
-  \fi
+  \colorlet{scsnowmansavedcolor}{.}%
   % key initialization using default
   \sctkzsym@snowman@defaultkeys
   % read <key>=<value>
