@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{scmpsym-base}[2018-11-19 Base for emoji variants using MetaPost]
+\ProvidesPackage{scmpsym-base}[2018-12-02 Base for emoji variants using MetaPost]
 %
 % prepare for options
 \newif\ifsctkzsym@document
@@ -39,10 +39,26 @@
 	\def\mpcolor##1{\csname mpxcolor@##1\endcsname}%
 	\begin{mpost}\scmp@env@body\end{mpost}%
   \egroup}
+  \ifdefined\pdfoutput %% pdfTeX
+    %% support only g, k, rg
+    \let\@@\relax
+    \def\scmp@color@to@ps#1#2\@@{%
+	  \ifcat#1a%
+	    \ifnum`#1=`g \space setgray\fi
+	    \ifnum`#1=`k \space setcmykcolor\fi
+	    \ifnum`#1=`r \space setrgbcolor\fi
+	  \expandafter\scmp@color@to@ps@gobble
+	  \else\string#1\space\expandafter\scmp@color@to@ps\fi#2\@@
+	}
+    \def\scmp@color@to@ps@gobble#1\@@{}
+    \let\@@\undefined
+  \else
+    \let\scmp@color@to@ps=\c@lor@to@ps
+  \fi
   \def\mplibcolor#1{%
 	\def\set@color{\edef#1{%
 	  \ifdefined\directlua1\fi
-	  withprescript "\expandafter\c@lor@to@ps\current@color\@@"}}%
+	  withprescript "\expandafter\scmp@color@to@ps\current@color\@@"}}%
 	\color
   }
   \let\mpcolor\relax
